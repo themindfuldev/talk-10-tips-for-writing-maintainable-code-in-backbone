@@ -10,7 +10,7 @@ You should just edit the source file at src/README.md - the one which stars with
 
 <br/><br/><br/><br/>
 
-Tiago Garcia @ [Backbone & Marionette in NYC](http://www.meetup.com/Dancing-with-Marionette-js/)
+Tiago Garcia @ [Dancing with Marionette meetup](http://www.meetup.com/Dancing-with-Marionette-js/)
 
 *http://tiagorg.com*
 

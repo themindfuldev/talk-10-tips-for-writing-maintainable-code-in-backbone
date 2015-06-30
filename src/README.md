@@ -10,7 +10,7 @@ You should just edit the source file at src/README.md - the one which stars with
 
 <br/><br/><br/><br/>
 
-@@author @ [Backbone & Marionette in NYC](http://www.meetup.com/Dancing-with-Marionette-js/)
+@@author @ [Dancing with Marionette meetup](http://www.meetup.com/Dancing-with-Marionette-js/)
 
 *@@site*
 
