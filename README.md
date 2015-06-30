@@ -2,19 +2,19 @@
 
 WARNING!! DON'T EDIT THE FILE README.md on the root of the project, that one is a GENERATED FILE!
 
-You should just edit the source file at src/README.md - the one which stars with ## Backbone.js tricks or treats
+You should just edit the source file at src/README.md - the one which stars with ## 10 tips for writing maintainable code in Backbone.js
 
 -->
 
-## Backbone.js tricks or treats
+## 10 tips for writing maintainable code in Backbone.js
 
-<br/><br/><br/><br/><br/><br/>
+<br/><br/><br/><br/>
 
-Tiago Garcia @ [HTML5DevConf](http://html5devconf.com)
+Tiago Garcia @ [Backbone & Marionette in NYC](http://www.meetup.com/Dancing-with-Marionette-js/)
 
 *http://tiagorg.com*
 
-Oct 20th, 2014
+Jul 20th, 2015
 
 ---
 
@@ -22,9 +22,10 @@ Oct 20th, 2014
 
 <img src="http://www.gravatar.com/avatar/5cac784a074b86d771fe768274f6860c?s=250" class="avatar">
 
-- Tech Manager at [Avenue Code](http://www.avenuecode.com) 
+- Tech Manager at [Avenue Code](http://www.avenuecode.com).
 - Tech Lead at [Macys.com](http://www.macys.com).
 - Organizer of the [Backbone.js Hackers meetup in SF](http://www.meetup.com/Backbone-js-Hackers).
+- Gonna speak tomorrow at [DevCon5](http://www.html5report.com/conference/newyork/).
 
 
 ---
@@ -35,7 +36,6 @@ Oct 20th, 2014
  - Views and Memory leaks
  - Overwhelming the DOM
  - Nesting views
- - Application and Modules
  - Router vs Controller
  - Cohesion
  - Coupling
@@ -45,24 +45,15 @@ Oct 20th, 2014
 
 ---
 
-## Prerequisites
-
-- [Backbone.js](http://slides.com/avenuecode/boosting-the-client-side-with-backbone-js#/)
-- [Design patterns for large-scale javascript](http://slides.com/avenuecode/design-patterns-for-large-scale-javascript#/)
-- Curiosity
-- Opinion
-
----
-
 ## AJAX Rant
 
 - Think twice before saying AJAX ever again.
 - AJAX = *A*synchronous *J*avascript *A*nd *X*ML.
 - AJAJ = *A*synchronous *J*avascript *A*nd *J*SON.
-- It is hardly because of *XMLHttpRequest* object -> it can transfer in any format.
-- RESTful APIs became popular -> I don't quite see XML responses ever since.
+- Not because *XMLHttpRequest* -> it can transfer in any format.
+- RESTful APIs became popular -> I don't see much XML around.
 - XML lacks out-of-the-box support on MV* frameworks.
-- However, *AJAJ* doesn't sound as cool as *AJAX* so people prefer not using the proper term.
+- However, *AJAJ* doesn't sound as cool as *AJAX* :(
 - *ASYNC*, FTW! Who will join me?
 
 ----
@@ -76,11 +67,11 @@ Oct 20th, 2014
 ## The jQuery Way
 
 - Backbone depends on jQuery\*, but *depending !== abusing*.
-- Newcomers tend to adopt jQuery-based solutions instead of taking advantage of Backbone.js structures:
+- Common mistake: adopting jQuery-based solutions instead of taking advantage of Backbone.js structures:
   - *Backbone.Model* takes care of async calls so they **SHOULDN'T** be coded like *`$.ajax()`*.
   - *Backbone.View* takes care of DOM events binding so they **SHOULDN'T** be coded like *`$(el).click(...)`*.
-- A common scenario in code migrations to Backbone, but simple to fix. Just put Models and Views to do their work.
-- Follow [Step by step from jQuery to Backbone](https://github.com/kjbekkelund/writings/blob/master/published/understanding-backbone.md) to shed some light on this process.
+- Simple to fix: just put Models and Views to do their work.
+- Follow [Step by step from jQuery to Backbone](https://github.com/kjbekkelund/writings/blob/master/published/understanding-backbone.md) and rejoice.
 
 ---
 
@@ -98,7 +89,7 @@ Oct 20th, 2014
     }
   });
 ```
-- *MyView* gets instantiated twice: 1st will never be Garbage Collected, as the model holds its reference -> *Zombie View*.
+- If *MyView* gets instantiated twice: 1st will never be Garbage Collected, as the model still refers to it -> *Zombie View*.
 - This can cause *side effects* -> alert box will appear twice.
 
 ----
@@ -179,17 +170,17 @@ Oct 20th, 2014
 
 - In a View which renders a Collection, we normally render a child View for each item and append them to the parent:
 ```javascript
-    var CollectionView = Backbone.View.extend({
-      render: function() {
-        _.each(this.collection.models, function(item) {
-          var view = new MyView({
-            model: item
-          });
+  var CollectionView = Backbone.View.extend({
+    render: function() {
+      _.each(this.collection.models, function(item) {
+        var view = new MyView({
+          model: item
+        });
 
-          this.$el.append(view.render().el); // Populating the DOM
-        }, this);
-      }
-    });
+        this.$el.append(view.render().el); // Populating the DOM
+      }, this);
+    }
+  });
 ```
 - Say the Collection has N items, this code will make N appends, which is *expensive*. What if N = 1000?
 
@@ -200,21 +191,21 @@ Oct 20th, 2014
 
 - A better approach is to append to a *document fragment* instead, and just add the fragment *once* to the DOM:
 ```javascript
-    var CollectionView = Backbone.View.extend({
-      render: function() {
-        var fragment = document.createDocumentFragment();
+  var CollectionView = Backbone.View.extend({
+    render: function() {
+      var fragment = document.createDocumentFragment();
 
-        _.each(this.collection.models, function(item) {
-          var view = new MyView({
-            model: item
-          });
+      _.each(this.collection.models, function(item) {
+        var view = new MyView({
+          model: item
+        });
 
-          fragment.appendChild(view.render().el); // Appending to fragment
-        }, this);
+        fragment.appendChild(view.render().el); // Appending to fragment
+      }, this);
 
-        this.$el.html(fragment); // Populating the DOM
-      }
-    });
+      this.$el.html(fragment); // Populating the DOM
+    }
+  });
 ```
 
 ----
@@ -311,11 +302,11 @@ Oct 20th, 2014
 
 ----
 
-## Marionette's Layout
+## Marionette's LayoutView
 
-- *Marionette.Layout* extends from *Marionette.ItemView* but provides embedded *Marionette.Region*s which can be populated with other views.
+- *Marionette.LayoutView* extends from *Marionette.ItemView* but provides embedded *Marionette.Region*s which can be populated with other views.
 ```javascript
-  var OuterView = Backbone.Marionette.Layout.extend({
+  var OuterView = Marionette.LayoutView.extend({
     template: '#outer-template',
 
     regions: {
@@ -327,51 +318,7 @@ Oct 20th, 2014
   outer.render();
 
   var inner = new InnerView();
-  outer.inner.show(inner);
-```
-
----
-
-## Application and Modules
-
-- Global vars are evil. Nesting global vars (*namespaces*) is a common alternative, but it can easily get slow/messy.
-- Non-AMD applications usually have a global var to represent the app, hold the declarations and initialize it.
-- Introducing *Marionette.Application*, without nesting:
-```javascript
-  var MyApp = new Marionette.Application();
-
-  MyApp.addInitializer(function(options) {
-    new MyRouter(options.initialRoute);
-    Backbone.history.start();
-  });
-
-  MyApp.start({
-    initialRoute: 'home'
-  });
-```
-
-----
-
-## Marionette's Application
-
-- Can fire events on before, after and during initialization.
-- Holds *Marionette.Region*s for global layout organization.
-- Can define, access, start and stop *Marionette.Modules*:
-```javascript
-  MyApp.module('myModule', function() { // Defining
-    var privateData = 'I am private'; // Private var
-    this.publicFunction = function() { // Public method
-      return privateData;
-    };
-
-    this.addInitializer(function() { // Initializer
-      console.log(privateData);
-    });
-  });
-
-  var myModule = MyApp.module('myModule'); // Accessing
-  myModule.start(); // Starting
-  myModule.stop(); // Stopping
+  outer.getRegion('inner').show(inner);
 ```
 
 ---
@@ -384,7 +331,7 @@ Oct 20th, 2014
   - coordinate modules
 - A Router's main (and only) purpose is to define routes and delegate the flow to different parts of the application.
 - According to MVC, *Controllers* should deal with such things as Models, Collections, Views and Modules.
-- Even though Backbone.js is MV*, there is nothing wrong on creating Controllers just as any other Module.
+- Even though Backbone.js is MV*, there is nothing wrong on creating Controllers just as any other module.
 
 ----
 
@@ -413,7 +360,7 @@ Oct 20th, 2014
 
 ## Marionette's AppRouter
 
-- *Marionette.AppRouter* binds the route methods to an external *Controller*:
+- *Marionette.AppRouter* binds the route methods to an external *Controller* (plain JS object):
 ```javascript
   var MyRouter = new Marionette.AppRouter({
     controller: myController,
@@ -434,15 +381,16 @@ Oct 20th, 2014
 - Why should you write a complex interface logic (full of customized components) on the same file?
 - To achieve a good separation of concerns, factor small pieces of related code into *cohesive Modules*:
 ```javascript
-  MyApp.module('vehicleFactory', function() {
-    this.createVehicle = function(wheels) {
+  // vehicleFactory.js
+  modules.export = {
+    createVehicle: function(wheels) {
       switch (wheels) {
         case 2: return new MotorcycleModel();
         case 4: return new CarModel();
         default: return new VehicleModel();
       }
     }
-  });
+  };
 ```
 
 ---
@@ -458,37 +406,33 @@ Oct 20th, 2014
   };
   var invoker = {         // Should be a Publisher
     start: function() {
-      alerter.sayIt();
+      alerter.sayIt();    // hard dependency on alerter
     }
   };
   invoker.start();
 ```
-- Back in [Design Patterns for Large-Scale Javascript](http://slid.es/avenuecode/design-patterns-for-large-scale-javascript), a manual Pub/Sub implementation was proposed.
 
 ----
 
 ## Backbone.Radio
 
-- [Backbone.Radio](https://github.com/marionettejs/backbone.radio) also implements a Pub/Sub:
+- [Backbone.Radio](https://github.com/marionettejs/backbone.radio) implements a Pub/Sub:
 ```javascript
-  MyApp.module('alerter', function() {   // Subscriber
-    this.addInitializer(function() {
-      Backbone.Radio.channel('alerter').on('sayIt', function() {
-        alert('May the force be with you.');
-      });
-    });
+  // alerter.js
+  var Radio = require('backbone.radio');
+  Radio.channel('alerter').on('sayIt', function() {
+    alert('May the force be with you.');
   });
 
-  MyApp.module('invoker', function() {   // Publisher
-    this.addInitializer(function() {
-      Backbone.Radio.channel('alerter').trigger('sayIt');
-    });
-  });
+  // invoker.js
+  var Radio = require('backbone.radio');
+  Backbone.Radio.channel('alerter').trigger('sayIt');
 
-  MyApp.module('alerter').start();
-  MyApp.module('invoker').start();
+  // main.js
+  require('alerter');
+  require('invoker');
 ```
-- This will be replacing *Backbone.Wreqr* on Marionette.js.
+- This is replacing *Backbone.Wreqr* on Marionette.js.
 
 ---
 
@@ -639,16 +583,6 @@ and Ember.js, featuring:
 
 ---
 
-## Conclusion
-
-- Backbone.js is not a complete application structure framework, thus many details are left for the developer.
-- In order to avoid problems and keep up with the good practices, *Marionette.js* comes very handy.
-- Data binding can be made easy with *Epoxy.js*.
-- *React.js* can greatly componentize your View layer.
-- Mocking async calls with *Sinon.JS* provides a solid way to test Backbone.js integration.
-
----
-
 ## Learn more
 
 1. [Structuring jQuery with Backbone.js](http://www.codemag.com/Article/1312061)
@@ -662,20 +596,3 @@ and Ember.js, featuring:
 1. [React](http://facebook.github.io/react/)
 1. [Sinon.JS](http://sinonjs.org)
 1. [Leche](https://github.com/box/leche)
-
----
-
-## Meetups
-
-1. [Backbone.js Hackers](http://www.meetup.com/Backbone-js-Hackers/) - San Francisco
-1. [Dancing with Marionette](http://www.meetup.com/Dancing-with-Marionette-js/) - New York
-1. [ReactJS](http://www.meetup.com/ReactJS-San-Francisco/) - San Francisco
-
----
-
-## Challenge
-
-1. Fork my [Quiz App](https://github.com/tiagorg/quiz-app) or come up with a brand new Backbone.js application which requires interaction with the user.
-1. Use *Marionette.js* and either *React.js* or *Epoxy.js*. Explore them well and use their features as much as possible.
-1. Evaluate the pros and cons of your solution regarding the adoption of such frameworks, in terms of code organization, verbosity, scalability and robustness.
-1. Send me your analysis and project in a GitHub repo.

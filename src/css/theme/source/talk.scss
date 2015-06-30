@@ -37,7 +37,7 @@ $heading1TextShadow: 0 1px 0 #ccc, 0 2px 0 #c9c9c9, 0 3px 0 #bbb, 0 4px 0 #b9b9b
 
 // Background generator
 @mixin bodyBackground() {
-	@include radial-gradient( rgba(28,30,32,1), rgba(85,90,95,1) );
+  @include radial-gradient( rgba(28,30,32,1), rgba(85,90,95,1) );
 }
 
 
@@ -47,8 +47,8 @@ $heading1TextShadow: 0 1px 0 #ccc, 0 2px 0 #c9c9c9, 0 3px 0 #bbb, 0 4px 0 #b9b9b
 // ---------------------------------------------
 
 .reveal.center {
-  background-image: url("../../img/background.jpg");
-  background-color: #2b2b2b;
+  //background-image: url("../../img/background.jpg");
+  //background-color: #2b2b2b;
 
   .slides {
     section {
@@ -72,7 +72,6 @@ $heading1TextShadow: 0 1px 0 #ccc, 0 2px 0 #c9c9c9, 0 3px 0 #bbb, 0 4px 0 #b9b9b
       img.icon {
         max-height: 250px;
         max-width: 250px;
-        border: 0;
         background: none;
         position: absolute;
         right: 0;
@@ -117,8 +116,15 @@ $heading1TextShadow: 0 1px 0 #ccc, 0 2px 0 #c9c9c9, 0 3px 0 #bbb, 0 4px 0 #b9b9b
         margin: 0px;
         background: none;
         box-shadow: none;
-        border: 0;
         margin-bottom: 20px;
+      }
+
+      img {
+        border: 0;
+      }
+
+      .center {
+        text-align: center;
       }
     }
   }

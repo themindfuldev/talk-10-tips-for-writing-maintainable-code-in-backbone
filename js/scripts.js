@@ -4648,7 +4648,7 @@ Reveal.addEventListener('ready', function() {
   'use strict';
 
   var footer = TEMPLATES.footer({
-    title: 'Backbone.js tricks or treats',
+    title: '10 tips for writing maintainable code in Backbone.js',
     author: 'Tiago Garcia',
     site: 'http://tiagorg.com'
   });
