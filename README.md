@@ -64,7 +64,7 @@ Jul 20th, 2015
 
 ---
 
-## The jQuery Way
+## #1: The jQuery Way
 
 - Backbone depends on jQuery\*, but *depending !== abusing*.
 - Common mistake: adopting jQuery-based solutions instead of taking advantage of Backbone.js structures:
@@ -75,7 +75,7 @@ Jul 20th, 2015
 
 ---
 
-## Views and Memory leaks
+## #2: Views & Memory leaks
 
 - Backbone leaves much of the code structure for the developer to define and implement.
 - Bad designs easily lead to memory leaks.
@@ -130,7 +130,7 @@ Jul 20th, 2015
 
 ----
 
-## Marionette's ItemView
+## ItemView
 
 - *Marionette.ItemView* extends *Backbone.View* and automates the rendering of a single item (Model or Collection).
 - It implements *render()* for you, applying a given *template* to a Model/Collection.
@@ -148,7 +148,7 @@ Jul 20th, 2015
 
 ----
 
-## Marionette's Region
+## Region
 
 - *Marionette.Region* is a Views container and manager.
 - It properly displays Views on the DOM and disposes them -> no more Zombie Views.
@@ -166,7 +166,7 @@ Jul 20th, 2015
 
 ---
 
-## Overwhelming the DOM
+## #3: DOM Overwhelming
 
 - In a View which renders a Collection, we normally render a child View for each item and append them to the parent:
 ```javascript
@@ -210,7 +210,7 @@ Jul 20th, 2015
 
 ----
 
-## Marionette's CollectionView
+## CollectionView
 
 - *Marionette.CollectionView* renders a Collection and uses a *Marionette.ItemView* for each item renderization. It doesn't need a template for itself.
 - Uses a *document fragment* internally.
@@ -224,7 +224,7 @@ Jul 20th, 2015
 
 ----
 
-## Marionette's CompositeView
+## CompositeView
 
 - *Marionette.CompositeView* is similar to a *Marionette.CollectionView* but also takes a template for itself. Designed for parent-child relationships.
 - Useful to build hierarchical and recursive structures like *trees*.
@@ -240,7 +240,7 @@ Jul 20th, 2015
 
 ---
 
-## Nesting views
+## #4: Nesting views
 
 - Common view nesting:
 ```javascript
@@ -302,7 +302,7 @@ Jul 20th, 2015
 
 ----
 
-## Marionette's LayoutView
+## LayoutView
 
 - *Marionette.LayoutView* extends from *Marionette.ItemView* but provides embedded *Marionette.Region*s which can be populated with other views.
 ```javascript
@@ -323,7 +323,7 @@ Jul 20th, 2015
 
 ---
 
-## Router vs Controller
+## #5: Controller Router
 
 - Routers commonly violate the *Single Responsibility Principle* (SRP) when used to:
   - instantiate and manipulate views
@@ -358,7 +358,7 @@ Jul 20th, 2015
 
 ----
 
-## Marionette's AppRouter
+## AppRouter
 
 - *Marionette.AppRouter* binds the route methods to an external *Controller* (plain JS object):
 ```javascript
@@ -375,11 +375,11 @@ Jul 20th, 2015
 
 ---
 
-## Cohesion
+## #6: Cohesion
 
-- Backbone.js provides Models, Collections, Views and Routers. It doesn't mean we can't use other components here.
-- Why should you write a complex interface logic (full of customized components) on the same file?
-- To achieve a good separation of concerns, factor small pieces of related code into *cohesive Modules*:
+- Backbone.js provides Models, Collections, Views and Routers, but we are not limited to these.
+- Why should you write complex interface logic (full of customized components) on the same file?
+- For a good separation of concerns, factor small pieces of related code into *cohesive Modules*:
 ```javascript
   // vehicleFactory.js
   modules.export = {
@@ -395,16 +395,16 @@ Jul 20th, 2015
 
 ---
 
-## Coupling
+## #7: Coupling
 
 - Components depending on other components usually create unnecessary *tight coupling*, which can be greatly reduced using a Pub/Sub:
 ```javascript
-  var alerter = {         // Should be a Subscriber
+  var alerter = {         // should be a Subscriber
     sayIt: function() {
       alert('May the force be with you.');
     }
   };
-  var invoker = {         // Should be a Publisher
+  var invoker = {         // should be a Publisher
     start: function() {
       alerter.sayIt();    // hard dependency on alerter
     }
@@ -420,14 +420,16 @@ Jul 20th, 2015
 ```javascript
   // alerter.js
   var Radio = require('backbone.radio');
-  Radio.channel('alerter').on('sayIt', function() {
+  Radio.channel('alerter').on('sayIt', function() {    // Subscriber
     alert('May the force be with you.');
   });
-
+```
+```javascript
   // invoker.js
   var Radio = require('backbone.radio');
-  Backbone.Radio.channel('alerter').trigger('sayIt');
-
+  Backbone.Radio.channel('alerter').trigger('sayIt');  // Publisher
+```
+```javascript
   // main.js
   require('alerter');
   require('invoker');
@@ -436,7 +438,7 @@ Jul 20th, 2015
 
 ---
 
-## Data binding
+## #8: Data binding
 
 - Backbone.js data binding is primitive while other MV* frameworks (Ember.js, Knockout.js, AngularJS) excel on it.
 - This code re-renders the whole View for each Model's change:
@@ -498,7 +500,7 @@ and Ember.js, featuring:
 
 ---
 
-## Components
+## #9: Components
 
 - Views reusability for real? Think components.
 - *Web Components* spec is right around the corner.
@@ -536,7 +538,7 @@ and Ember.js, featuring:
   );
 ```
 
----
+----
 
 ## Benchmark
 
@@ -546,7 +548,7 @@ and Ember.js, featuring:
 
 ---
 
-## Mocking async calls
+## #10: Mocking calls
 
 - How to unit test Models that consume data from a server?
 - Using a real server can be slow. The server must also be up at all times, otherwise the tests will probably fail.
