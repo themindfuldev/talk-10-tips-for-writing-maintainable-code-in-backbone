@@ -27,7 +27,6 @@ You should just edit the source file at src/README.md - the one which stars with
 - Organizer of the [Backbone.js Hackers meetup in SF](http://www.meetup.com/Backbone-js-Hackers).
 - Gonna speak tomorrow at [DevCon5](http://www.html5report.com/conference/newyork/).
 
-
 ---
 
 ## Agenda
@@ -598,3 +597,18 @@ and Ember.js, featuring:
 1. [React](http://facebook.github.io/react/)
 1. [Sinon.JS](http://sinonjs.org)
 1. [Leche](https://github.com/box/leche)
+
+---
+
+## Marionette VDOM
+
+- https://github.com/tiagorg/marionette-vdom
+- https://www.npmjs.com/package/marionette-vdom
+- A *Marionette.ItemView* and *Marionette.CompositeView* implementation with [virtual-dom](https://github.com/Matt-Esch/virtual-dom)
+- Help is appreciated :)
+
+---
+
+# Thanks!
+
+- Special thanks to Joanne Daudier and all you guys for the attention!
