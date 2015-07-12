@@ -26,21 +26,22 @@ Jul 20th, 2015
 - Tech Lead at [Macys.com](http://www.macys.com).
 - Organizer of the [Backbone.js Hackers meetup in SF](http://www.meetup.com/Backbone-js-Hackers).
 - Gonna speak tomorrow at [DevCon5](http://www.html5report.com/conference/newyork/).
+- [2nd overall article on AirPair writing contest](https://www.airpair.com/javascript/posts/the-mind-boggling-universe-of-javascript-modules).
 
 ---
 
 ## Agenda
 
- - The jQuery Way
- - Views and Memory leaks
- - Overwhelming the DOM
- - Nesting views
- - Router vs Controller
- - Cohesion
- - Coupling
- - Data binding
- - Components
- - Mocking async calls
+1. Avoid jQuery Way
+- Beware Memory leaks
+- Don't Overwhelm
+- Nest views right
+- Control the Router
+- Advocate Cohesion
+- Eliminate Coupling
+- Bind your data
+- Componentize
+- Mock your calls
 
 ---
 
@@ -63,18 +64,18 @@ Jul 20th, 2015
 
 ---
 
-## #1: The jQuery Way
+## #1: Avoid jQuery Way
 
 - Backbone depends on jQuery\*, but *depending !== abusing*.
 - Common mistake: adopting jQuery-based solutions instead of taking advantage of Backbone.js structures:
-  - *Backbone.Model* takes care of async calls so they **SHOULDN'T** be coded like *`$.ajax()`*.
-  - *Backbone.View* takes care of DOM events binding so they **SHOULDN'T** be coded like *`$(el).click(...)`*.
+  - *Backbone.Model* takes care of data async calls so they **NEEDN'T** be coded like *`$.ajax()`*.
+  - *Backbone.View* takes care of DOM events binding so they **NEEDN'T** be coded like *`$(el).click(...)`*.
 - Simple to fix: just put Models and Views to do their work.
 - Follow [Step by step from jQuery to Backbone](https://github.com/kjbekkelund/writings/blob/master/published/understanding-backbone.md) and rejoice.
 
 ---
 
-## #2: Views & Memory leaks
+## #2: Beware Memory leaks
 
 - Backbone leaves much of the code structure for the developer to define and implement.
 - Bad designs easily lead to memory leaks.
@@ -165,7 +166,7 @@ Jul 20th, 2015
 
 ---
 
-## #3: DOM Overwhelming
+## #3: Don't Overwhelm
 
 - In a View which renders a Collection, we normally render a child View for each item and append them to the parent:
 ```javascript
@@ -239,7 +240,7 @@ Jul 20th, 2015
 
 ---
 
-## #4: Nesting views
+## #4: Nest views right
 
 - Common view nesting:
 ```javascript
@@ -322,7 +323,7 @@ Jul 20th, 2015
 
 ---
 
-## #5: Controller Router
+## #5: Control the Router
 
 - Routers commonly violate the *Single Responsibility Principle* (SRP) when used to:
   - instantiate and manipulate views
@@ -374,7 +375,7 @@ Jul 20th, 2015
 
 ---
 
-## #6: Cohesion
+## #6: Advocate Cohesion
 
 - Backbone.js provides Models, Collections, Views and Routers, but we are not limited to these.
 - Why should you write complex interface logic (full of customized components) on the same file?
@@ -394,7 +395,7 @@ Jul 20th, 2015
 
 ---
 
-## #7: Coupling
+## #7: Eliminate Coupling
 
 - Components depending on other components usually create unnecessary *tight coupling*, which can be greatly reduced using a Pub/Sub:
 ```javascript
@@ -437,7 +438,7 @@ Jul 20th, 2015
 
 ---
 
-## #8: Data binding
+## #8: Bind your data
 
 - Backbone.js data binding is primitive while other MV* frameworks (Ember.js, Knockout.js, AngularJS) excel on it.
 - This code re-renders the whole View for each Model's change:
@@ -499,7 +500,7 @@ and Ember.js, featuring:
 
 ---
 
-## #9: Components
+## #9: Componentize
 
 - Views reusability for real? Think components.
 - *Web Components* spec is right around the corner.
@@ -547,7 +548,7 @@ and Ember.js, featuring:
 
 ---
 
-## #10: Mocking calls
+## #10: Mock your calls
 
 - How to unit test Models that consume data from a server?
 - Using a real server can be slow. The server must also be up at all times, otherwise the tests will probably fail.
