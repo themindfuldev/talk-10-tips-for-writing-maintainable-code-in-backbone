@@ -34,7 +34,7 @@ Jul 20th, 2015
 
 1. Avoid jQuery Way
 - Beware Memory leaks
-- Don't Overwhelm
+- Don't overwhelm the DOM
 - Nest views right
 - Control the Router
 - Advocate Cohesion
@@ -166,7 +166,7 @@ Jul 20th, 2015
 
 ---
 
-## #3: Don't Overwhelm
+## #3: Don't Overwhelm the DOM
 
 - In a View which renders a Collection, we normally render a child View for each item and append them to the parent:
 ```javascript
