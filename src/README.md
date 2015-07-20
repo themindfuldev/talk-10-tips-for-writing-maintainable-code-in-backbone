@@ -26,7 +26,7 @@ You should just edit the source file at src/README.md - the one which stars with
 - Tech Lead at [Macys.com](http://www.macys.com).
 - Organizer of the [Backbone.js Hackers meetup in SF](http://www.meetup.com/Backbone-js-Hackers).
 - Gonna speak tomorrow at [DevCon5](http://www.html5report.com/conference/newyork/).
-- [2nd overall article on AirPair writing contest](https://www.airpair.com/javascript/posts/the-mind-boggling-universe-of-javascript-modules).
+- [1th overall article on AirPair writing contest](https://www.airpair.com/javascript/posts/the-mind-boggling-universe-of-javascript-modules).
 
 ---
 
